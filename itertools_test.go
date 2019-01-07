@@ -66,3 +66,44 @@ func TestCycleByte(t *testing.T) {
 //		i += 1
 //	}
 //}
+
+// TODO
+// clean up
+func predString(s rune) bool {
+	return string(s) == "s"
+}
+
+func TestTakeWhileString(t *testing.T) {
+	actual := make([]rune, 6)
+	size := 0
+	for s := range TakeWhileString(predString, "ssskam") {
+		actual[size] = s
+		size += 1
+	}
+}
+
+func predInt(s int) bool {
+	return s < 5
+}
+
+func TestTakeWhileInt(t *testing.T) {
+	input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	for s := range TakeWhileInt(predInt, input) {
+		if s >= 5 {
+			t.Fail()
+		}
+	}
+}
+
+func filterIntPred(s int) bool {
+	return s%2 == 0
+}
+
+func TestFilterInt(t *testing.T) {
+	input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	for s := range TakeWhileInt(filterIntPred, input) {
+		if s%2 != 0 {
+			t.Fail()
+		}
+	}
+}
